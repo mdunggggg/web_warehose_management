@@ -4,6 +4,7 @@
 		header('location:suanhacungcap.php?error=Hãy điền đầy đủ thông tin của nhà cung cấp');
 		exit;
 	}
+	
 	$id = $_POST['id'];
 	$ten = $_POST['ten'];
 	$sodienthoai = $_POST['sodienthoai'];
