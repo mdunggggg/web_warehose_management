@@ -1,0 +1,69 @@
+
+CREATE TABLE loaisanpham (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    ten VARCHAR(255) NOT NULL,
+    donvitinh VARCHAR(100) NOT NULL
+);
+CREATE TABLE nhacungcap (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ten VARCHAR(255) NOT NULL,
+  sodienthoai VARCHAR(20),
+  email VARCHAR(255),
+  diachi TEXT,
+  INDEX (sodienthoai),
+  INDEX (email)
+);
+CREATE TABLE sanpham (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_loaisanpham INT NOT NULL,
+    ten VARCHAR(255) NOT NULL,
+    id_ncc INT NOT NULL,
+    gianhap DECIMAL(10, 2) NOT NULL,
+    giaban DECIMAL(10, 2) NOT NULL,
+    soluong INT NOT NULL,
+    FOREIGN KEY (id_loaisanpham) REFERENCES loaisanpham(id),
+    FOREIGN KEY (id_ncc) REFERENCES nhacungcap(id)
+);
+CREATE TABLE nhanvien (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  ten VARCHAR(255) NOT NULL,
+  sodienthoai VARCHAR(20),
+  email VARCHAR(255),
+  diachi TEXT,
+  taikhoan VARCHAR(255) NOT NULL UNIQUE,
+  matkhau VARCHAR(255) NOT NULL,
+  quyen TINYINT(1) NOT NULL CHECK (quyen IN (0, 1))
+);
+CREATE TABLE donnhap (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  trangthai VARCHAR(255),
+  id_nhanvien INT,
+  ngaynhap DATE,
+  FOREIGN KEY (id_nhanvien) REFERENCES nhanvien(id)
+);
+CREATE TABLE donnhapchitiet (
+  id_donnhap INT,
+  id_sanpham INT,
+  soluongnhap INT,
+  PRIMARY KEY (id_donnhap, id_sanpham),
+  FOREIGN KEY (id_donnhap) REFERENCES donnhap(id),
+  FOREIGN KEY (id_sanpham) REFERENCES sanpham(id)
+);
+CREATE TABLE donxuat(
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  trangthai VARCHAR(255),
+  id_nhanvien INT,
+  ngayxuat DATE,
+  FOREIGN KEY (id_nhanvien) REFERENCES nhanvien(id)
+);
+CREATE TABLE donxuatchitiet (
+  id_donxuat INT,
+  id_sanpham INT,
+  soluongxuat INT,
+  PRIMARY KEY (id_donxuat, id_sanpham),
+  FOREIGN KEY (id_donxuat) REFERENCES donxuat(id),
+  FOREIGN KEY (id_sanpham) REFERENCES sanpham(id)
+);
+
+
+
